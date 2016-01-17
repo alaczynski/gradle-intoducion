@@ -1,0 +1,26 @@
+import org.gradle.configuration.Help
+
+// 1. create task
+task empty
+
+// 2. configure task
+task onlyConfiguration {
+    println "configuration of $name"
+    group = "Special group for $name"
+}
+// 3. add action
+task withAction {
+    doLast {
+        println "number of actions $actions.size"
+    }
+}
+// 4. add action using lef-shift << operator (
+task withActionAddedByLeftShift << {
+    println "number of actions $actions.size"
+}
+
+// 5. task with type
+// - syntax?
+task helpTask(type: org.gradle.configuration.Help) {
+    taskPath = 'withAction'
+}

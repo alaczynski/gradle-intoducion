@@ -1,0 +1,4 @@
+println "\nevaluating settings.gradle"
+include 'project-a'
+ext.setting_property = 'value'
+apply from: 'print.gradle'

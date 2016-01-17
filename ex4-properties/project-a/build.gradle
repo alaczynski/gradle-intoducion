@@ -1,0 +1,5 @@
+println "\nevaluating project-a build.gradle"
+ext.project_a_property = 'value'
+apply from: '../print.gradle'
+ext.root_property = 'overridden'
+println "root_property - " + root_property

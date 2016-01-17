@@ -1,0 +1,4 @@
+println "\nevaluating root project build.gradle"
+ext.root_property = 'value'
+ext.root_property2 = 'value2'
+apply from: 'print.gradle'

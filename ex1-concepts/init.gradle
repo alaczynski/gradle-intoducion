@@ -1,0 +1,26 @@
+import static java.lang.System.currentTimeMillis
+
+useLogger(new CustomEventLogger())
+
+class CustomEventLogger extends BuildAdapter implements TaskExecutionListener {
+
+    private Map<Task, Long> taskStartTimeInMillis = [:]
+
+    public void beforeExecute(Task task) {
+
+        println "[$task.path - start]"
+        taskStartTimeInMillis[task] = currentTimeMillis()
+    }
+
+    public void afterExecute(Task task, TaskState state) {
+        println "[$task.path - executed within ${currentTimeMillis() - taskStartTimeInMillis[task]} ms]"
+    }
+
+    @Override
+    void buildFinished(BuildResult result) {
+        if (result.failure != null) {
+            result.rethrowFailure()
+        }
+    }
+}
+

@@ -1,0 +1,1 @@
+gradle -I init.gradle -Pcommand_property=value -Dcommand_system_property=value

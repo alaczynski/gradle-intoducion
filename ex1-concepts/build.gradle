@@ -1,0 +1,9 @@
+allprojects {
+    apply plugin: 'java'
+    group = 'introduction-to-gradle'
+    version = '1.0'
+}
+
+task printVersion << {
+    println "$project.name version: $version"
+}

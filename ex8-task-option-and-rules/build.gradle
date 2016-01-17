@@ -1,0 +1,27 @@
+import org.gradle.api.internal.tasks.options.Option
+
+tasks.addRule("Pattern: ping<ip>") { String taskName ->
+    if (taskName.startsWith("ping")) {
+        task(taskName) << {
+            println "Pinging " + taskName.substring("ping".length())
+        }
+    }
+}
+
+class PingTask extends DefaultTask {
+    String ip
+
+    @Option(option = "ip", description = "ip")
+    void setIp(String someOption) {
+        this.ip = someOption
+    }
+
+    @TaskAction
+    def action() {
+        println "Pinging $ip"
+    }
+}
+
+task ping(type: PingTask)
+
+

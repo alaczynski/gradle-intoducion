@@ -1,0 +1,24 @@
+task hello(type: GreetingTask)
+
+task greetings(type: GreetingTask) {
+    message = 'Greetings!'
+}
+
+task salute(type: GreetingTask)
+// how it works? NamedDomainObjectCollection
+salute {
+    message = "Salute!"
+}
+
+class GreetingTask extends DefaultTask {
+    String message = 'Hello!'
+
+    void setMessage(String message) {
+        this.message = message
+    }
+
+    @TaskAction
+    def greet() {
+        println message
+    }
+}

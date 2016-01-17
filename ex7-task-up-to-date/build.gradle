@@ -1,0 +1,27 @@
+class TransformTask extends DefaultTask {
+    @InputFile
+    def File inputFile
+    @OutputDirectory
+    def File destDir
+    @Input
+    def String separator = "->"
+
+    @TaskAction
+    def transform() {
+        println "Transforming source file."
+        destDir.mkdirs()
+        def mountains = new XmlParser().parse(inputFile)
+        mountains.mountain.each { mountain ->
+            def name = mountain.name[0].text()
+            def height = mountain.height[0].text()
+            def destFile = new File(destDir, "${name}.txt")
+            destFile.text = "$name $separator ${height}\n"
+        }
+    }
+}
+
+task transform(type: TransformTask) {
+    inputFile = file('mountains.xml')
+    destDir = new File(buildDir, 'generated')
+    separator = ":"
+}

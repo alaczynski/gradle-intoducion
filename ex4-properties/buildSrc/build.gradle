@@ -1,0 +1,3 @@
+println "\nevaluating buildSrc project build.gradle"
+ext.buildSrc_property = 'value'
+apply from: '../print.gradle'

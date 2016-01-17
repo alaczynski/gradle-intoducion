@@ -1,0 +1,33 @@
+// property vs script scope variable
+try {
+    // script scope variables are not supported by gradle
+    var1 = 1
+    assert false
+} catch (MissingPropertyException e) {
+    println "access from script: " + e.message
+}
+
+// local variable
+def var2 = 2
+assert var2 == 2
+
+// local variable used in method
+def var3 = 3
+
+def method() {
+    try {
+        var3
+        assert false
+    } catch (MissingPropertyException e) {
+        println "access from method: " + e.message
+    }
+}
+
+method()
+
+// local variable used in closure
+def var4 = 4
+task task1 {
+    ext.var1 = var4
+}
+assert task1.var1 == 4
