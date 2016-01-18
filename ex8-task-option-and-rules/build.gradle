@@ -24,4 +24,8 @@ class PingTask extends DefaultTask {
 
 task ping(type: PingTask)
 
+task pingGroup {
+    dependsOn ping1, ping2
+}
+
 

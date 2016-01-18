@@ -5,7 +5,7 @@ task greetings(type: GreetingTask) {
 }
 
 task salute(type: GreetingTask)
-// how it works? NamedDomainObjectCollection
+
 salute {
     message = "Salute!"
 }
