@@ -16,6 +16,7 @@ def var3 = 3
 
 def method() {
     try {
+        // local variable cannot be used in methods
         var3
         assert false
     } catch (MissingPropertyException e) {
