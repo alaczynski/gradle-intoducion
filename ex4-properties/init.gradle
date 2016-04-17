@@ -1,3 +1,0 @@
-println "\nevaluating init.gradle"
-ext.init_property = 'value'
-apply from: 'print.gradle'

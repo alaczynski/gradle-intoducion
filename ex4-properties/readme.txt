@@ -1,1 +1,6 @@
-gradle -I init.gradle -Pcommand_property=value -Dcommand_system_property=value
+* build
+gw -Dorg.gradle.debug=true
+
+* project
+gw properties child:properties | grep version
+gw properties child:properties -PjunitVersion=1 | grep version
