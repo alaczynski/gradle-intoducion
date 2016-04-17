@@ -1,12 +1,15 @@
 // 1. Property accessors
 public class User {
     private String name;
+
     public User(String name) {
         this.name = name;
     }
+
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -46,13 +49,13 @@ applyMap a: 1, b: 2
 
 // 6. Closures as the last parameter in a method
 def applyClosure(Closure closure) {
-    closure()
+    assert closure()
 }
 
-applyClosure() { println "b" }
-applyClosure({ println "a" })
+applyClosure() { true }
+applyClosure({ true })
 applyClosure {
-    println "c"
+    true
 }
 
 // 7. Closure delegate
@@ -68,36 +71,29 @@ assert project.plugins == ['java']
 
 class Project {
     def plugins = []
-    def dependencies = ['compile': []]
 
     def apply(Map<String, String> map) {
         plugins.add(map['plugin'])
-    }
-
-    def Object methodMissing(String name, Object args) {
-        def dependency = (args as Object[])[0]
-        dependencies[name] += dependency
     }
 }
 
 // 8. Closure delegate with missing method
 Closure dependenciesClosure = {
-    compile 'junit:junit:4.11'
     compile 'org.apache.commons:commons-lang3:3.4'
+    testCompile 'junit:junit:4.11'
 }
 def dependencyHandler = new DependencyHandler()
 dependenciesClosure.delegate = dependencyHandler
 dependenciesClosure.resolveStrategy = Closure.DELEGATE_FIRST
 dependenciesClosure()
-assert dependencyHandler.dependencies.compile == ['junit:junit:4.11', 'org.apache.commons:commons-lang3:3.4']
+assert dependencyHandler.dependencies.compile == ['org.apache.commons:commons-lang3:3.4']
+assert dependencyHandler.dependencies.testCompile == ['junit:junit:4.11']
 
 class DependencyHandler {
-    def dependencies = ['compile': []]
+    def dependencies = ['compile': [], 'testCompile': []]
 
     def Object methodMissing(String name, Object args) {
         def dependency = (args as Object[])[0]
-        dependencies[name] += dependency
+        dependencies[name].add(dependency)
     }
 }
-
-// 9. configuration via extension object
