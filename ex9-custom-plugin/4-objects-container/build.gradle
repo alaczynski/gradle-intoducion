@@ -2,8 +2,7 @@ apply plugin: DocumentationPlugin
 
 books {
     quickStart {
-        //println "configuring book $it.name"
-        sourceFile = file('src/docs/quick-start')
+        sourceFile = file('src/docs/QUICK-START')
     }
     userGuide {
 
@@ -23,9 +22,6 @@ class DocumentationPlugin implements Plugin<Project> {
     void apply(Project project) {
         def books = project.container(Book)
         books.all {
-            // what is the value sourceFile for quickStart book
-
-            //println "book $it.name added to container"
             sourceFile = project.file("src/docs/$name")
         }
         project.extensions.books = books
